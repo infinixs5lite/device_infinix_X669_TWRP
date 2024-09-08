@@ -174,6 +174,8 @@ TW_DEVICE_VERSION := Nino
 TW_MTP_DEVICE := /dev/mtp_usb
 TW_HAS_MTP := true
 
+TW_PREPARE_DATA_MEDIA_EARLY := true
+
 # Debug
 TWRP_EVENT_LOGGING := true
 TWRP_INCLUDE_LOGCAT := true
