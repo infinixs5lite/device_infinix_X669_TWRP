@@ -5,27 +5,78 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-LOCAL_PATH := device/infinix/Infinix-X669
+LOCAL_PATH := device/infinix/X669
 # A/B
+
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-# Boot control HAL
+# Virtual A/B
+ENABLE_VIRTUAL_AB := true
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+
+# Dynamic Partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# VNDK
+PRODUCT_TARGET_VNDK_VERSION := 31
+
+# API
+PRODUCT_SHIPPING_API_LEVEL := 31
+
+# Health HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-service
+    android.hardware.health@2.0-impl \
+    android.hardware.health@2.0-service \
+    libhealthd.$(PRODUCT_PLATFORM)
+
+# Boot Control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.1-impl \
+    android.hardware.boot@1.1-impl.recovery \
+    android.hardware.boot@1.1-service
+
+PRODUCT_PACKAGES_DEBUG += \
+    bootctrl
 
 PRODUCT_PACKAGES += \
-    bootctrl.ums9230
+    bootctrl.unisoc \
+    bootctrl.unisoc.recovery
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.ums9230 \
-    libgptutils \
-    libz \
-    libcutils
+# --- Decryption (doesn't work!)
+# PRODUCT_PROPERTY_OVERRIDES += \
+   	ro.crypto.dm_default_key.options_format.version=2 \
+   	ro.crypto.volume.filenames_mode=aes-256-cts \
+   	ro.crypto.volume.metadata.method=dm-default-key \
+   	ro.crypto.volume.options=::v2 \
+   	ro.crypto.uses_fs_ioc_add_encryption_key=true
+
+#vibro
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hardware.vibrator-V1-cpp.so \
+    android.hardware.vibrator@1.0.so \
+    android.hardware.vibrator@1.1.so \
+    android.hardware.vibrator@1.2.so \
+    android.hardware.vibrator@1.3.so 
+
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator-V1-cpp.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.1.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.2.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.3.so
+
+# Fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery \
+    fastbootd
+
+PRODUCT_PACKAGES_DEBUG += \
+    update_engine_client
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
