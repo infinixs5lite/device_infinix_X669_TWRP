@@ -167,3 +167,15 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_DEVICE_VERSION := Nino
+
+# MTP
+TW_MTP_DEVICE := /dev/mtp_usb
+TW_HAS_MTP := true
+
+# Debug
+TWRP_EVENT_LOGGING := true
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
+
+# Kernel module loading
+TW_LOAD_VENDOR_MODULES := "incrementalfs.ko kheaders.ko trace_irqsoff_bytedancy.ko trace_noschedule_bytedancy.ko trace_runqlat_bytedancy.ko adaptive_ts.ko"
