@@ -5,10 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/infinix/Infinix-X669
-
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
+DEVICE_PATH := device/infinix/X669
 
 # Build hack
 BUILD_BROKEN_DUP_RULES := true
@@ -150,7 +147,6 @@ BOARD_ROOT_EXTRA_FOLDERS += metadata
 
 # Properties prop & fstab
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # Encryption
