@@ -7,6 +7,20 @@
 
 LOCAL_PATH := device/infinix/X669
 
+# A/B
+AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS += \
+    vendor_dlkm \
+    vendor \
+    vbmeta \
+    system \
+    boot \
+    vbmeta_system \
+    product \
+    vbmeta_vendor \
+    dtbo \
+    system_ext
+
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
