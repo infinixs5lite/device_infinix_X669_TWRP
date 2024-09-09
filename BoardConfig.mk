@@ -39,23 +39,38 @@ TARGET_SCREEN_DENSITY := 320
 
 # Kernel 
 TARGET_NO_KERNEL := true
+TARGET_KERNEL_ARCH := $(TARGET_ARCH)
+BOARD_KERNEL_CMDLINE := \
+    androidboot.hardware=qcom \
+    androidboot.memcg=1 \
+    androidboot.usbcontroller=a600000.dwc3 \
+    cgroup.memory=nokmem,nosocket \
+    loop.max_part=7 \
+    lpm_levels.sleep_disabled=1 \
+    msm_rtb.filter=0x237 \
+    pcie_ports=compat \
+    service_locator.enable=1 \
+    swiotlb=0 \
+    ip6table_raw.raw_before_defrag=1 \
+    iptable_raw.raw_before_defrag=1
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 buildvariant=user
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_KERNEL_CONFIG := X669_defconfig
 TARGET_KERNEL_SOURCE := kernel/infinix/X669
 
-# Vendor command line
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
-BOARD_KERNEL_CMDLINE += androidboot.force_normal_boot=1
-BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 buildvariant=user
-
-# Kernel - prebuilt
+# DTB
+ifndef BOARD_PREBUILT_DTBOIMAGE
+BOARD_KERNEL_SEPARATED_DTBO := true
+endif
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+ifndef TARGET_PREBUILT_DTB
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+else
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+endif
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
