@@ -37,10 +37,10 @@ TARGET_NO_BOOTLOADER := true
 # Display
 TARGET_SCREEN_DENSITY := 320
 
-# Kernel 
+# Kernel
 TARGET_NO_KERNEL := true
-TARGET_KERNEL_ARCH := $(TARGET_ARCH)
-BOARD_KERNEL_CMDLINE := \
+BOARD_RAMDISK_USE_LZ4 := true
+BOARD_VENDOR_CMDLINE := \
     androidboot.hardware=qcom \
     androidboot.memcg=1 \
     androidboot.usbcontroller=a600000.dwc3 \
@@ -53,11 +53,19 @@ BOARD_KERNEL_CMDLINE := \
     swiotlb=0 \
     ip6table_raw.raw_before_defrag=1 \
     iptable_raw.raw_before_defrag=1
-BOARD_BOOTIMG_HEADER_VERSION := 4
+BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 buildvariant=user
-BOARD_KERNEL_PAGESIZE := 4096
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+BOARD_PAGE_SIZE := 4096
+
+
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+BOARD_MKBOOTIMG_ARGS += --vendor_cmdline $(BOARD_VENDOR_CMDLINE)
+BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_PAGE_SIZE) --board ""
+BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 
 # DTB
 ifndef BOARD_PREBUILT_DTBOIMAGE
