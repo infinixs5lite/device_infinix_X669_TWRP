@@ -6,7 +6,6 @@
 #
 
 LOCAL_PATH := device/infinix/X669
-# A/B
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -52,22 +51,7 @@ PRODUCT_PACKAGES += \
    	ro.crypto.volume.filenames_mode=aes-256-cts \
    	ro.crypto.volume.metadata.method=dm-default-key \
    	ro.crypto.volume.options=::v2 \
-   	ro.crypto.uses_fs_ioc_add_encryption_key=true
-
-#vibro
-TARGET_RECOVERY_DEVICE_MODULES += \
-    android.hardware.vibrator-V1-cpp.so \
-    android.hardware.vibrator@1.0.so \
-    android.hardware.vibrator@1.1.so \
-    android.hardware.vibrator@1.2.so \
-    android.hardware.vibrator@1.3.so 
-
-RECOVERY_LIBRARY_SOURCE_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator-V1-cpp.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.0.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.1.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.2.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator@1.3.so
+   	ro.crypto.uses_fs_ioc_add_encryption_key=true 
 
 # Fastbootd
 PRODUCT_PACKAGES += \
