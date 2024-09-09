@@ -14,20 +14,6 @@ BUILD_BROKEN_PREBUILT_ELF_FILES := true
 BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 SOONG_ALLOW_MISSING_DEPENDENCIES := true
 
-# A/B
-AB_OTA_UPDATER := true
-AB_OTA_PARTITIONS += \
-    vendor_dlkm \
-    vendor \
-    vbmeta \
-    system \
-    boot \
-    vbmeta_system \
-    product \
-    vbmeta_vendor \
-    dtbo \
-    system_ext
-
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -54,6 +40,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_SCREEN_DENSITY := 320
 
 # Kernel
+TARGET_NO_KERNEL := true
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
@@ -73,7 +60,6 @@ BOARD_KERNEL_CMDLINE += androidboot.force_normal_boot=1
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 buildvariant=user
 
 # Kernel - prebuilt
-TARGET_NO_KERNEL := true
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
@@ -125,9 +111,6 @@ ENABLE_SCHEDBOOST := true
 # TW_INCLUDE_FBE_METADATA_DECRYPT := true
 # BOARD_USES_QCOM_FBE_DECRYPTION := true
 # TW_USE_FSCRYPT_POLICY := 1
-# TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
 
 # Use mke2fs to create ext4 images
 TARGET_USES_MKE2FS := true
