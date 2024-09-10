@@ -50,7 +50,7 @@ BOARD_KERNEL_SEPARATED_DTBO := true
 
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_PAGE_SIZE := 4096
-BOARD_VENDOR_CMDLINE console=ttyS1,115200n8 buildvariant=user
+BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 androidboot.selinux=permissive
 BOARD_VENDOR_BASE := 0x00000000                                    
 BOARD_PAGE_SIZE := 4096
 BOARD_KERNEL_OFFSET := 0x00008000
